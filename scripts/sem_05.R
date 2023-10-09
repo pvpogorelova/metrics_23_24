@@ -1,4 +1,5 @@
 # Семинар 5.
+# Задание 5.
 install.packages("tidyverse")
 install.packages("sjPlot")
 install.packages("car")
@@ -11,7 +12,6 @@ library(rio) # импорт/экспорт данных
 library(car) # тестирование гипотез
 library(lmtest) # тестирование гипотез
 library(psych)
-# Задание 5.
 
 # Импортируем данные.
 data <- import("/Users/polinapogorelova/Desktop/dataflats.xlsx")
@@ -58,7 +58,7 @@ coeftest(ols_2)
 confint(ols_1, level = 0.9)
 confint(ols_2, level = 0.9)
 
-# Проверка гпиотезы о незначимости моделей в целом
+# Проверка гипотезы о незначимости моделей в целом
 linearHypothesis(ols_1, c("livesp=0", "dist=0"))
 linearHypothesis(ols_2, c("livesp=0", "metrdist=0", "dist=0"))
 
