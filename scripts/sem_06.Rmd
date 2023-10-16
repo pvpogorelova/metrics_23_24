@@ -1,0 +1,62 @@
+---
+title: "Seminar 6. Seasonal Dummy Variables."
+output:
+  pdf_document: 
+    keep_tex: true
+date: "2023-10-15"
+---
+
+```{r, include=FALSE}
+# Libraries
+library(tidyverse) # манипуляции с данными и построение графиков
+library(sjPlot) # красивые графики для линейных моделей
+library(rio) # импорт/экспорт данных
+library(car) # тестирование гипотез
+library(lmtest) # тестирование гипотез
+library(ggfortify) # еще графики
+```
+
+# Import data
+```{r}
+data = import('/Users/polinapogorelova/Downloads/dataset 2/dataset/ch2/Chow_2.xls')
+head(data)
+```
+
+# Model with a constant
+$$C_i = \beta_1 + \beta_2 Y_i + \beta_3 D2_i + \beta_4 D3_i + \beta_5 D4_i + \varepsilon_i$$
+```{r}
+data$Quarter = as.factor(data$Quarter)
+model_1 = lm(C ~ Y + D2 + D3 + D4, data)
+summary(model_1)
+```
+
+# Hypothesis testing
+$$H_0: \beta_3 = \beta_4 = \beta_5 = 0$$
+```{r}
+linearHypothesis(model_1, c("D2 = 0", "D3 = 0", "D4 = 0"))
+```
+
+# Model without a constant
+$$C_i = \beta_1 Y_i + \beta_2 D2_i + \beta_3 D3_i + \beta_4 D4_i + \beta_5 D5_i + \varepsilon_i$$
+```{r}
+reg_wc = lm(C ~ 0 + Y + D1 + D2 + D3 + D4, data)
+summary(reg_wc)
+```
+
+# Graph
+```{r}
+data %>%
+  ggplot(aes(x = Y,
+             y = C,
+             color = Quarter))+
+  geom_point()+
+  geom_smooth(method = "lm")
+```
+
+# Extended model
+$$C_i = \beta_1 + \beta_2 Y_i + \beta_3 D2_i + \beta_4 D3_i + \beta_5 D4_i + \beta_6 Y_i*D2_i + \beta_7 Y_i*D3_i + \beta_8 Y_i*D4_i + \varepsilon_i$$
+```{r}
+data$Quarter = as.factor(data$Quarter)
+model_2 = lm(C ~ Y*Quarter, data = data)
+summary(model_2)
+```
