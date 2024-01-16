@@ -15,8 +15,8 @@ library(rdrobust) # RDD
 d <- read_csv("https://docs.google.com/uc?id=10h_5og14wbNHU-lapQaS1W6SBdzI7W6Z&export=download")
 
 # Построим гистограммы распределения почасовой зарплаты в двух штатах до повышения МРОТ (февраль,1992) как в статье
-x_st_wage_before_nj <- d$x_st_wage_before[data$d_nj == 1] # почасовая зарплата в Нью-Джерси до повышения
-x_st_wage_before_pa <- d$x_st_wage_before[data$d_pa == 1] # почасовая зарплата в Пенсильвании до повышения
+x_st_wage_before_nj <- d$x_st_wage_before[d$d_nj == 1] # почасовая зарплата в Нью-Джерси до повышения
+x_st_wage_before_pa <- d$x_st_wage_before[d$d_pa == 1] # почасовая зарплата в Пенсильвании до повышения
 
 xbins <- list(start = 4.20, end = 5.60, size = 0.1)
 
